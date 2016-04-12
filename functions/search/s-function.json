@@ -1,0 +1,56 @@
+{
+  "name": "search",
+  "runtime": "nodejs",
+  "description": "Serverless Lambda function for project: serverless-es",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/search/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [
+    {
+      "path": "search",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {
+        "integration.request.querystring.word": "method.request.querystring.word"
+      },
+      "requestTemplates": {
+        "application/json": {
+          "word": "$input.params('word')"
+        }
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {
+            "application/json": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "ES_HOST": "${esHost}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
